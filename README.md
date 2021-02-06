@@ -1,6 +1,10 @@
 # cankurtaran
 
-A new Flutter application.
+An app made with Flutter that aims to help people during an earthquake.
+
+------------------
+
+Flutter ile yapılan, deprem anında insanlara yardımcı olmayı hedefleyen bir uygulamadır.
 
 ## Getting Started
 

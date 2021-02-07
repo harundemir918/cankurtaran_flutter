@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cytechnoware.cankurtaran">
-   <application
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="cankurtaran"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD7fMmSnEbLDlzYMReBrJmM5L62QN-KYIo"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

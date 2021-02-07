@@ -29,9 +29,7 @@ class _MainPanelState extends State<MainPanel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWithMenu(
-        title: 'cankurtaran',
-      ),
+      appBar: AppBarWithMenu(),
       body: Center(
         child: Container(
           padding: EdgeInsets.only(

@@ -21,7 +21,7 @@ class _OnBoardingState extends State<OnBoarding> {
         MaterialPageRoute(builder: (BuildContext context) => Login()));
   }
 
-  Widget _buildImage(String assetName) {
+  Widget _buildImage(String assetName, double width) {
     return Align(
       child: Image.asset(
         'assets/images/$assetName',
@@ -40,6 +40,8 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+
     const bodyStyle = TextStyle(
       fontSize: 22,
       color: Colors.white,
@@ -70,16 +72,16 @@ class _OnBoardingState extends State<OnBoarding> {
       key: introKey,
       pages: [
         _buildPageViewModel(
-          body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          image: _buildImage('earthquake-icon.jpg'),
+          body: onboardingText1,
+          image: _buildImage('cankurtaran-logo.png', deviceWidth * 0.5),
         ),
         _buildPageViewModel(
-          body: 'Integer tristique et diam quis vestibulum.',
-          image: _buildImage('earthquake-icon.jpg'),
+          body: onboardingText2,
+          image: _buildImage('cankurtaran-logo.png', deviceWidth * 0.5),
         ),
         _buildPageViewModel(
-          body: 'Vivamus aliquet sem non euismod venenatis.',
-          image: _buildImage('earthquake-icon.jpg'),
+          body: onboardingText3,
+          image: _buildImage('cankurtaran-logo.png', deviceWidth * 0.5),
         ),
       ],
       onDone: () => _onIntroEnd(context),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'login.dart';
+import '../../widgets/logo.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _RegisterState extends State<Register> {
             _buildTextFormField(hintText: 'Kullanıcı Adı'),
             _buildTextFormField(hintText: 'Şifre'),
             _buildTextFormField(hintText: 'Şifre (Tekrar)', height: 50.0),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Giriş Yap'),
               onPressed: () {},
             ),
@@ -42,7 +43,7 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Hesabınız var mı?'),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
@@ -63,14 +64,13 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Column(
         children: [
-          Image.asset(
-            'assets/images/earthquake-icon.jpg',
-            width: 300,
-            height: 300,
-          ),
+          Logo(width: deviceWidth * 0.5, height: deviceHeight * 0.5,),
           Container(
             margin: EdgeInsets.symmetric(
               horizontal: 50,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'ui/screens/start/splash.dart';
+import 'constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Cankurtaran',
+      title: appName,
       home: Splash(),
     );
   }

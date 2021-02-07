@@ -1,3 +1,4 @@
+import 'package:cankurtaran/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 
@@ -9,6 +10,7 @@ class CallForHelpPanel extends StatefulWidget {
 }
 
 class _CallForHelpPanelState extends State<CallForHelpPanel> {
+  Api api = Api();
   final assetsAudioPlayer = AssetsAudioPlayer();
 
   playLocal() {
@@ -17,13 +19,29 @@ class _CallForHelpPanelState extends State<CallForHelpPanel> {
     );
   }
 
+  _sendMessage() async {
+    await api.sendMessage();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        child: Text('Yardım Çağır'),
-        onPressed: playLocal,
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          child: Text('Yardım Çağır'),
+          onPressed: () async {
+            await _sendMessage();
+            final snackBar = SnackBar(content: Text('Yardım mesajı gönderildi.'));
+
+            Scaffold.of(context).showSnackBar(snackBar);
+          },
+        ),
+        ElevatedButton(
+          child: Text('Deprem Düdüğü'),
+          onPressed: playLocal,
+        ),
+      ],
     );
   }
 }

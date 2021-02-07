@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:cankurtaran/api/api.dart';
+import 'package:cankurtaran/models/earthquake_model.dart';
 import 'package:cankurtaran/ui/screens/panel/earthquake_map.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +13,20 @@ class LastEarthquakesPanel extends StatefulWidget {
 }
 
 class _LastEarthquakesPanelState extends State<LastEarthquakesPanel> {
-  Widget _buildListElement({latitude, longitude}) {
+  Api api = Api();
+  List<EarthquakeModel> _earthquakeList = [];
+
+  void initState() {
+    super.initState();
+    _fetchEarthquakes();
+  }
+
+  _fetchEarthquakes() async {
+    _earthquakeList = await api.fetchEarthquakes();
+    setState(() {});
+  }
+
+  Widget _buildListElement({double latitude, longitude, name, magnitude, depth}) {
     return Column(
       children: [
         InkWell(
@@ -20,6 +37,9 @@ class _LastEarthquakesPanelState extends State<LastEarthquakesPanel> {
                 builder: (context) => EarthquakeMap(
                   latitude: latitude,
                   longitude: longitude,
+                  name: name,
+                  magnitude: magnitude,
+                  depth: depth,
                 ),
               ),
             );
@@ -33,14 +53,13 @@ class _LastEarthquakesPanelState extends State<LastEarthquakesPanel> {
             child: Row(
               children: [
                 CircleAvatar(
-                  child: Text('5.5'),
+                  child: Text(depth.toString()),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text(
-                  'Deprem Bölgesi',
-                  style: Theme.of(context).textTheme.headline6,
+                  name,
                 ),
               ],
             ),
@@ -56,29 +75,17 @@ class _LastEarthquakesPanelState extends State<LastEarthquakesPanel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView(
-        children: [
-          _buildListElement(
-            latitude: 37.0664094,
-            longitude: 37.3826504,
-          ),
-          _buildListElement(
-            latitude: 37.0664094,
-            longitude: 37.3826504,
-          ),
-          _buildListElement(
-            latitude: 37.0664094,
-            longitude: 37.3826504,
-          ),
-          _buildListElement(
-            latitude: 37.3826504,
-            longitude: 37.0664094,
-          ),
-          _buildListElement(
-            latitude: 37.3826504,
-            longitude: 37.0664094,
-          ),
-        ],
+      child: ListView.builder(
+        itemCount: _earthquakeList.length,
+        itemBuilder: (context, index) {
+          return _buildListElement(
+            latitude: _earthquakeList[index].lat,
+            longitude: _earthquakeList[index].lng,
+            name: _earthquakeList[index].locationName,
+            magnitude: _earthquakeList[index].mag,
+            depth: _earthquakeList[index].depth,
+          );
+        },
       ),
     );
   }

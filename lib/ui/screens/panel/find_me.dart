@@ -5,26 +5,20 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../widgets//appbar_with_back.dart';
 
-class EarthquakeMap extends StatefulWidget {
+class FindMe extends StatefulWidget {
   final latitude;
   final longitude;
-  final name;
-  final magnitude;
-  final depth;
 
-  EarthquakeMap({
+  FindMe({
     @required this.latitude,
     @required this.longitude,
-    @required this.name,
-    @required this.magnitude,
-    @required this.depth,
 });
 
   @override
-  _EarthquakeMapState createState() => _EarthquakeMapState();
+  _FindMeState createState() => _FindMeState();
 }
 
-class _EarthquakeMapState extends State<EarthquakeMap> {
+class _FindMeState extends State<FindMe> {
   Set<Marker> _markers = {};
   Completer<GoogleMapController> _controller = Completer();
 
@@ -64,34 +58,6 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
                   );
                 },
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Bölge: ${widget.name}'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(''),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Şiddet: ${widget.magnitude}'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Derinlik: ${widget.depth}'),
-                  ],
-                ),
-              ],
             ),
           ],
         ),

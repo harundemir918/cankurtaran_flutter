@@ -1,5 +1,8 @@
-import 'package:cankurtaran/ui/widgets/appbar_with_menu.dart';
+import 'package:cankurtaran/models/emergency_model.dart';
+import 'package:cankurtaran/ui/screens/panel/find_me.dart';
 import 'package:flutter/material.dart';
+
+import '../../../api/api.dart';
 
 class EmergencyPanel extends StatefulWidget {
   static const routeName = '/emergency-panel';
@@ -9,7 +12,20 @@ class EmergencyPanel extends StatefulWidget {
 }
 
 class _EmergencyPanelState extends State<EmergencyPanel> {
-  Widget _buildListElement() {
+  Api api = Api();
+  List<EmergencyModel> _emergencyList = [];
+
+  void initState() {
+    super.initState();
+    _fetchEmergency();
+  }
+
+  _fetchEmergency() async {
+    _emergencyList = await api.fetchEmergency();
+    setState(() {});
+  }
+
+  Widget _buildListElement({name, picture, message, lat, lng}) {
     return Column(
       children: [
         Container(
@@ -23,15 +39,14 @@ class _EmergencyPanelState extends State<EmergencyPanel> {
               Row(
                 children: [
                   CircleAvatar(
-                    child: Text('İS'),
+                    child: Image.network(picture),
                   ),
                   SizedBox(
                     width: 20,
                   ),
                   Column(
                     children: [
-                      Text('İsim Soyisim'),
-                      Text('Şehir / Bölge'),
+                      Text(name),
                     ],
                   ),
                 ],
@@ -47,7 +62,7 @@ class _EmergencyPanelState extends State<EmergencyPanel> {
                 ),
                 child: Center(
                   child: Text(
-                    'xx,yy koordinatlarındayım. Yardım edin.',
+                    message,
                   ),
                 ),
               ),
@@ -57,8 +72,18 @@ class _EmergencyPanelState extends State<EmergencyPanel> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RaisedButton(
-                    onPressed: () {},
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FindMe(
+                            latitude: lat,
+                            longitude: lng,
+                          ),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Beni Bul',
                     ),
@@ -66,7 +91,7 @@ class _EmergencyPanelState extends State<EmergencyPanel> {
                   SizedBox(
                     width: 20,
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {},
                     child: Text(
                       'Bilgilerimi Gör',
@@ -87,15 +112,17 @@ class _EmergencyPanelState extends State<EmergencyPanel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView(
-        children: [
-          _buildListElement(),
-          _buildListElement(),
-          _buildListElement(),
-          _buildListElement(),
-          _buildListElement(),
-        ],
-      ),
+      child: ListView.builder(
+          itemCount: _emergencyList.length,
+          itemBuilder: (context, index) {
+            return _buildListElement(
+              name: _emergencyList[index].user.name,
+              picture: _emergencyList[index].user.profilePicture,
+              message: _emergencyList[index].message,
+              lat: _emergencyList[index].lat,
+              lng: _emergencyList[index].lng,
+            );
+          }),
     );
   }
 }
